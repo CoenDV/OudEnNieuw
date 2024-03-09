@@ -12,7 +12,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <input class="btn btn-danger" type="submit" name="delete" value="Delete Account">
+                    <input class="btn btn-danger" type="button" name="delete" value="Delete Account"
+                        @click="deleteUser(this.user)">
                 </div>
             </div>
         </div>
@@ -20,8 +21,29 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
     name: "DeleteModal",
+    data() {
+        return {
+            userId: JSON.parse(localStorage.getItem("user")).userId
+        }
+    },
+    methods: {
+        deleteUser(user) {
+            axios
+                .delete("http://localhost/users/" + this.userId)
+                .then(response => {
+                    console.log(response.data)
+                    localStorage.removeItem("user")
+                    this.$router.push("/home")
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        }
+    }
 };
 </script>
 
