@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from '../../axios-auth';
 
 export default {
     name: "DeleteModal",
@@ -33,7 +33,7 @@ export default {
     methods: {
         deleteUser(user) {
             axios
-                .delete("http://localhost/users/" + this.userId)
+                .delete("/users/" + this.userId)
                 .then(response => {
                     console.log(response.data)
                     localStorage.removeItem("user")

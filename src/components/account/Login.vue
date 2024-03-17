@@ -26,7 +26,8 @@
 
 <script>
 import Footer from './../Footer.vue'
-import axios from 'axios'
+import axios from '../../axios-auth';
+import router from '../../router';
 
 export default {
     name: "Login",
@@ -37,7 +38,14 @@ export default {
         return {
             username: null,
             password: null,
-            user: null
+            user: null,
+            jwt: "",
+        }
+    },
+    beforeMount() {
+        if(localStorage.getItem("user") != null) {
+            localStorage.removeItem("jwt")
+            localStorage.removeItem("user")
         }
     },
     methods: {
@@ -46,15 +54,16 @@ export default {
                 username: username,
                 password: password
             }
-            console.log(this.user)
             axios
-                .get("http://localhost/login", { params: this.user})
+                .get("/login", { params: this.user})
                 .then(response => {
-                    this.user = response.data
-                    console.log(this.user)
+                    this.jwt = response.data.jwt;
+                    this.user = response.data.user;
+                    axios.defaults.headers.common['Authorization'] = "Bearer " + this.jwt;
+                    
                     if(this.user != null) {
+                        localStorage.setItem("jwt", this.jwt)
                         localStorage.setItem("user", JSON.stringify(this.user))
-                        console.log(localStorage.getItem("user"))
                         this.$router.push("/account")
                     }
                 })

@@ -13,12 +13,18 @@
 <script>
 import AccountForm from './AccountForm.vue'
 import Footer from './../Footer.vue'
+import router from '../../router';
 
 export default {
     name: "Account",
     components: {
         AccountForm,
         Footer
+    },
+    beforeCreate() {
+        if(localStorage.getItem("user") == null) {
+            this.$router.push("/")
+        }
     },
     data() {
         return {

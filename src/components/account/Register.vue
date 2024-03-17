@@ -45,7 +45,7 @@
 <script>
 
 import Footer from './../Footer.vue'
-import axios from 'axios'
+import axios from '../../axios-auth';
 
 export default {
     name: "Register",
@@ -75,7 +75,7 @@ export default {
                 birthdate: this.date
             }
             axios
-                .post("http://localhost/users", this.user)
+                .post("/users", this.user)
                 .then(response => {
                     console.log(response.data)
                     this.$router.push("/")

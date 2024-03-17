@@ -1,12 +1,12 @@
 <template>
   <section>
     <div class="container">
-      <h1 class="mt-3 mt-lg-5">Welcome to Fitness Schedules, </h1> <!-- add username from session data -->
+      <h1 class="mt-3 mt-lg-5">Welcome to Fitness Schedules, {{ user.username }}</h1>
       <h3 class="text-secondary container">What will you be training today?</h3>
       <InfoCards />
     </div>
   </section>
-  <Footer />
+  <Footer> </Footer>
 </template>
 
 <script>
@@ -18,6 +18,11 @@ export default {
   components: {
     InfoCards,
     Footer
+  },
+  data() {
+    return {
+      user: JSON.parse(localStorage.getItem("user"))
+    }
   }
 };
 </script>

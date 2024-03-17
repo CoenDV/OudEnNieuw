@@ -4,27 +4,27 @@
             <div class="card-body">
                 <h5 class="card-title">Account Info</h5>
                 <div class="form-floating py-2">
-                    <input type="text" class="form-control" id="floatingUsername" name="username" v-model="user.username"> <!-- add username from account -->
+                    <input type="text" class="form-control" id="floatingUsername" name="username" v-model="user.username">
                     <label for="floatingUsername">Username</label>
                 </div>
                 <div class="form-floating py-2">
-                    <input type="password" class="form-control" id="floatingPassword" name="password" v-model="user.password"> <!-- add password from account -->
+                    <input type="password" class="form-control" id="floatingPassword" name="password" v-model="user.password">
                     <label for="floatingPassword">Password</label>
                 </div>
                 <div class="form-floating py-2">
-                    <input type="text" class="form-control" id="floatingFirstname" name="firstname" v-model="user.firstname"> <!-- add firstname from account -->
+                    <input type="text" class="form-control" id="floatingFirstname" name="firstname" v-model="user.firstname">
                     <label for="floatingFirstname">Firstname</label>
                 </div>
                 <div class="form-floating py-2">
-                    <input type="text" class="form-control" id="floatingLastname" name="lastname" v-model="user.lastname"> <!-- add lastname from account -->
+                    <input type="text" class="form-control" id="floatingLastname" name="lastname" v-model="user.lastname">
                     <label for="floatingLastname">lastname</label>
                 </div>
                 <div class="form-floating py-2">
-                    <input type="text" class="form-control" id="floatingWeight" name="weight" v-model="user.weight"> <!-- add weight from account -->
+                    <input type="text" class="form-control" id="floatingWeight" name="weight" v-model="user.weight">
                     <label for="floatingWeight">Weight</label>
                 </div>
                 <div class="form-floating py-2">
-                    <input type="date" class="form-control" id="floatingDate" name="date" v-model="user.birthdate"> <!-- add birthdate from account -->
+                    <input type="date" class="form-control" id="floatingDate" name="date" v-model="user.birthdate">
                     <label for="floatingDate">Birthdate</label>
                 </div>
                 <input class="w-100 btn btn-lg btn-primary my-2" type="button" name="update" value="Update Account" @click="update()">
@@ -39,7 +39,7 @@
 
 <script>
 import DeleteModal from './DeleteModal.vue'
-import axios from 'axios'
+import axios from '../../axios-auth';
 
 export default {
     name: "AccountForm",
@@ -54,7 +54,7 @@ export default {
     methods: {
         update() {
             axios
-                .put("http://localhost/users", this.user)
+                .put("/users", this.user)
                 .then(response => {
                 })
                 .catch(error => {
