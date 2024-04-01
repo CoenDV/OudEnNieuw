@@ -1,6 +1,9 @@
 <template>
     <section>
         <div class="container">
+            <div class="alert alert-danger" role="alert" v-if="errorMessage != ''">
+                {{ errorMessage }}
+            </div>
             <form method="POST" class="container-fluid col-xxl-6 col-md-6 col-sm-12 my-3">
                 <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
@@ -26,11 +29,14 @@
 
 <script>
 import Footer from './../Footer.vue'
-import axios from '../../axios-auth';
-import router from '../../router';
+import { userStore } from "../../stores/store";
 
 export default {
     name: "Login",
+    setup() {
+        const store = userStore();
+        return { store };
+    },
     components: {
         Footer
     },
@@ -40,35 +46,25 @@ export default {
             password: null,
             user: null,
             jwt: "",
+            errorMessage: ''
         }
     },
     beforeMount() {
-        if(localStorage.getItem("user") != null) {
+        if (localStorage.getItem("user") != null) {
             localStorage.removeItem("jwt")
             localStorage.removeItem("user")
+
+            window.location.reload()
         }
     },
     methods: {
         login(username, password) {
-            this.user = {
-                username: username,
-                password: password
-            }
-            axios
-                .get("/login", { params: this.user})
-                .then(response => {
-                    this.jwt = response.data.jwt;
-                    this.user = response.data.user;
-                    axios.defaults.headers.common['Authorization'] = "Bearer " + this.jwt;
-                    
-                    if(this.user != null) {
-                        localStorage.setItem("jwt", this.jwt)
-                        localStorage.setItem("user", JSON.stringify(this.user))
-                        this.$router.push("/account")
-                    }
+            this.store.login(username, password)
+                .then(() => {
+                    this.$router.push('/home')
                 })
-                .catch(error => {
-                    console.log(error)
+                .catch(() => {
+                    this.errorMessage = error;
                 })
         }
     }

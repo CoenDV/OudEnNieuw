@@ -1,8 +1,13 @@
 <script>
-import Navigation from './components/Navigation.vue'
+import Navigation from './components/Navigation.vue';
+import { userStore } from "./stores/store";
 
 export default {
   name: "App",
+  setup() {
+    const store = userStore();
+    store.autoLogin();
+  },
   components: {
     Navigation
   }
@@ -10,8 +15,8 @@ export default {
 </script>
 
 <template>
-    <navigation />
-    <routerView> </routerView>
-</template> 
+  <navigation />
+  <routerView> </routerView>
+</template>
 
 <style scoped></style>
