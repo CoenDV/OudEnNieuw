@@ -3,22 +3,21 @@
         <div class="container">
             <h1>Create a Schedule: </h1>
             <div class="container row">
-                <div class="col-xxl-6">
-                    <CreateScheduleAccordion />
-                </div>
-                <div class="col-xxl-6">
-                    <ScheduleForm />
+                <div class="col-xxl-12">
+                    <CreateScheduleAccordion :map="this.map"/>
                 </div>
             </div>
         </div>
     </section>
-    <Footer />
+    <Footer></Footer>
 </template>
 
 <script>
 import CreateScheduleAccordion from './CreateScheduleAccordion.vue'
 import ScheduleForm from './ScheduleForm.vue'
 import Footer from './../Footer.vue'
+
+import axios from '../../axios-auth'
 
 export default {
     name: "CreateSchedule",
@@ -37,8 +36,24 @@ export default {
     },
     data() {
         return {
-            exercises: [],
+            map: []
         };
+    },
+    created() {
+        this.getExercises();
+    },
+    methods: {
+        getExercises() {
+            axios
+                .get("/exercises/getAll")
+                .then((response) => {
+                    this.map = response.data;
+                    console.log(this.map);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
     },
 };
 </script>
