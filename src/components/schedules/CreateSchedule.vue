@@ -26,14 +26,6 @@ export default {
         ScheduleForm,
         Footer
     },
-    methods: {
-        addItem: function (exercise) {
-            // add exercise to schedule
-        },
-        sendForm: async function () {
-            // send schedule to backend
-        },
-    },
     data() {
         return {
             map: []

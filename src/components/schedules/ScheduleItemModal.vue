@@ -34,7 +34,7 @@
                     <form method="POST" class="my-3">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <input type="hidden" name="schedule" :value="schedule.scheduleId">
-                        <input type="button" name="update" class="btn btn-primary" value="Update Schedule" v-if="!public">
+                        <input type="button" name="update" class="btn btn-primary" value="Update Schedule" v-if="!public" @click="updateSchedule()">
                         <input type="button" name="delete" class="btn btn-danger" value="Delete Schedule" v-if="!public" @click="deleteSchedule()">
                     </form>
                 </div>
@@ -61,6 +61,7 @@ export default {
         }
     },
     created() {
+        
         if (this.url === '/schedules/publicschedules') {
             this.public = true;
         } else if (this.url === '/schedules/ownschedules') {
@@ -69,16 +70,8 @@ export default {
     },
     methods: {
         updateSchedule() {
-            axios
-            .put("/schedules/updateschedule", {
-                schedule: this.schedule
-            })
-            .then((response) => {
-                console.log(response);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+            localStorage.setItem("schedule", JSON.stringify(this.schedule));
+            this.$router.push("/schedules/updateschedule/");
         },
         deleteSchedule() {
             axios

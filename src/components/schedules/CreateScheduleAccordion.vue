@@ -67,7 +67,6 @@ export default {
     },
     data() {
         return {
-            muscleGroups: ["chest", "back", "legs", "arms", "shoulders", "abs"],
             usedExercises: [],
             scheduleName: "",
             description: "",
