@@ -8,12 +8,12 @@
         </li>
         <li class="nav-item">
           <RouterLink to="/schedules/publicschedules" class="nav-link" active-class="active"
-            :class="{ disabled: !store.isLoggedIn }">Public Schedules
+            :class="{ disabled: !store.isLoggedIn }" :key="$route.url">Public Schedules
           </RouterLink>
         </li>
         <li class="nav-item">
           <RouterLink to="/schedules/ownschedules" class="nav-link" active-class="active"
-            :class="{ disabled: !store.isLoggedIn }">Own Schedules</RouterLink>
+            :class="{ disabled: !store.isLoggedIn }" :key="$route.url">Own Schedules</RouterLink>
         </li>
         <li class="nav-item">
           <RouterLink to="/account" class="nav-link" active-class="active" :class="{ disabled: !store.isLoggedIn }">

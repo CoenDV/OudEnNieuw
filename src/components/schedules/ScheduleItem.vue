@@ -2,7 +2,7 @@
     <div class="card col-xxl-3 col-md-5 col-sm-12 m-2">
         <div class="card-header">
             <h5 class="card-title">{{ schedule.scheduleName }}</h5>
-            <h6 class="card-subtitle mb-2 text-body-secondary">By {{ user.username }}</h6>
+            <h6 class="card-subtitle mb-2 text-body-secondary">By {{ schedule.user }}</h6>
         </div>
         <div class="card-body">
             <p class="card-text">{{ schedule.description }}</p>

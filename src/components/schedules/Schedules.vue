@@ -14,6 +14,7 @@
 import ScheduleItem from './ScheduleItem.vue'
 import Footer from './../Footer.vue'
 import axios from '../../axios-auth'
+import router from '../../router';
 
 export default {
     name: "Schedules",
@@ -29,15 +30,23 @@ export default {
             user: JSON.parse(localStorage.getItem("user"))
         }
     },
-    created() {
-        if (this.url === '/schedules/publicschedules') {
-            this.public = true;
-        } else if (this.url === '/schedules/ownschedules') {
-            this.public = false;
-        }
-        this.getSchedules();
+    watch: {
+        '$route': 'fetchData'
+    },
+    mounted() {
+        this.fetchData();
     },
     methods: {
+        fetchData() {
+            if (this.$route.path === '/schedules/publicschedules') {
+                this.public = true;
+            } else if (this.$route.path === '/schedules/ownschedules') {
+                this.public = false;
+            }
+
+            this.schedules = [];
+            this.getSchedules();
+        },
         getSchedules() {
             if (this.public) {
                 this.getPublicSchedules();
@@ -50,6 +59,7 @@ export default {
                 .get("/schedules/publicschedules")
                 .then((response) => {
                     this.schedules = response.data;
+                    console.log(this.schedules);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -58,7 +68,7 @@ export default {
         getPrivateSchedules() {
             console.log(this.user);
             axios
-                .get("/schedules/ownschedules/"+this.user.userId)
+                .get("/schedules/ownschedules/" + this.user.userId)
                 .then((response) => {
                     this.schedules = response.data;
                 })
