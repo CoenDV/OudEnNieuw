@@ -2,20 +2,19 @@
     <div class="row">
         <div class="accordion col-6" id="accordionExample">
             <form>
-                <!-- set iterator on 0-->
-                <!-- foreach musclegroup-->
                 <div class="accordion-item" v-for="muscleGroup in map">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapse" aria-expanded="true" aria-controls="collapse">{{ }}</button>
-                        <!-- data-bs-target unique ID, aria-controls unique ID, add musclegroup name -->
+                            :data-bs-target="'#collapse' + muscleGroup[0].muscleGroup" aria-expanded="true"
+                            aria-controls="collapse">{{ muscleGroup[0].muscleGroup }}</button>
                     </h2>
-                    <div id="collapse" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                        <!-- id unique ID -->
+                    <div :id="'collapse' + muscleGroup[0].muscleGroup" class="accordion-collapse collapse"
+                        data-bs-parent="#accordionExample">
                         <div class="accordion-body">
                             <div class="form-check" v-for="exercise in muscleGroup">
                                 <input class="form-check-input" @click="addItem($event)" type="checkbox"
-                                    :value="exercise.exerciseId" :id="'flexCheckDefault' + exercise.exerciseId">
+                                    v-model="usedExercises" :value="exercise.exerciseId"
+                                    :id="'flexCheckDefault' + exercise.exerciseId">
                                 <label class="form-check-label" :for="'flexCheckDefault' + exercise.exerciseId"
                                     v-bind:id="'label' + exercise.exerciseId">
                                     {{ exercise.name }}

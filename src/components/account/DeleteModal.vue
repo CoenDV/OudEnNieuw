@@ -37,7 +37,7 @@ export default {
                 .then(response => {
                     console.log(response.data)
                     localStorage.removeItem("user")
-                    this.$router.push("/home")
+                    this.$router.push("/")
                 })
                 .catch(error => {
                     console.log(error)
