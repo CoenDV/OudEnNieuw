@@ -17,7 +17,7 @@ export const userStore = defineStore('store', {
                     password: password
                 }
                 axios
-                    .get("/login", { params: this.user })
+                    .post("/login", this.user)
                     .then(response => {
                         this.jwt = response.data.jwt;
                         this.user = response.data.user;
