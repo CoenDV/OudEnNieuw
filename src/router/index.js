@@ -1,24 +1,26 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import Login from '../components/account/Login.vue';
-import Register from '../components/account/Register.vue';
-import Home from '../components/home/Home.vue';
-import Account from '../components/account/Account.vue';
-import Schedules from '../components/schedules/Schedules.vue';
-import CreateSchedule from '../components/schedules/CreateSchedule.vue';
-import UpdateSchedule from '../components/schedules/UpdateSchedule.vue';
+import Login from '../components/common/Login.vue';
+import Home from '../components/common/index.vue';
+import Quiz from '../components/quiz/Quiz.vue';
+import Shop from '../components/shop/Shop.vue';
+import Challenge from '../components/challenge/Challenge.vue';
+
+import Presentation from '../components/big_screen/Presentation.vue';
+import Admin from '../components/big_screen/Admin.vue';
+import QuizScreen from '../components/big_screen/QuizScreen.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     { path: '/', component: Login },
-    { path: '/register', component: Register},
     { path: '/home', component: Home },
-    { path: '/account', component: Account },
-    { path: '/schedules/publicschedules', component: Schedules },
-    { path: '/schedules/ownschedules', component: Schedules },
-    { path: '/schedules/create', component: CreateSchedule },
-    { path: '/schedules/updateschedule', component: UpdateSchedule }
+    { path: '/quiz', component: Quiz },
+    { path: '/shop', component: Shop },
+    { path: '/challenge', component: Challenge },
+    { path: '/presentation', component: Presentation },
+    { path: '/admin', component: Admin},
+    { path: '/quizscreen', component: QuizScreen}
   ]
 })
 

@@ -3,30 +3,26 @@ import axios from '../axios-auth'
 
 export const userStore = defineStore('store', {
     state: () => ({
-        jwt: '',
-        user: ''
+        user: '',
+        username: ''
     }),
     getters: {
-        isLoggedIn: (state) => state.jwt !== '',
+        isLoggedIn: (state) => state.user !== null,
     },
     actions: {
-        login(username, password) {
+        login(username) {
             return new Promise((resolve, reject) => {
-                this.user = {
-                    username: username,
-                    password: password
-                }
                 axios
-                    .post("/login", this.user)
+                    .post("/login", { username: username })
                     .then(response => {
-                        this.jwt = response.data.jwt;
-                        this.user = response.data.user;
-                        axios.defaults.headers.common['Authorization'] = "Bearer " + this.jwt;
-                        resolve();
-
-                        if (this.user != null) {
-                            localStorage.setItem("jwt", this.jwt)
+                        this.username = username
+                        if (response.data.username == this.username) {
+                            this.user = response.data
+                            resolve();
                             localStorage.setItem("user", JSON.stringify(this.user))
+                        }
+                        else {
+                            reject("Invalid username")
                         }
                     })
                     .catch((error) => reject(error));
@@ -34,13 +30,10 @@ export const userStore = defineStore('store', {
             )
         },
         autoLogin() {
-            const jwt = localStorage.getItem("jwt")
             const user = localStorage.getItem("user")
 
-            if (jwt && user) {
-                this.jwt = jwt
+            if (user) {
                 this.user = JSON.parse(user)
-                axios.defaults.headers.common['Authorization'] = "Bearer " + this.jwt
             }
         }
     },

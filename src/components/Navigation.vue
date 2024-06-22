@@ -1,36 +1,18 @@
 <template>
-  <div class="container-fluid bg-light">
-    <header class="d-flex justify-content-center py-3 mb-1 border-bottom">
-      <ul class="nav nav-pills">
-        <li class="nav-item">
-          <RouterLink to="/home" class="nav-link" active-class="active" :class="{ disabled: !store.isLoggedIn }">Home
-          </RouterLink>
-        </li>
-        <li class="nav-item">
-          <RouterLink to="/schedules/publicschedules" class="nav-link" active-class="active"
-            :class="{ disabled: !store.isLoggedIn }" :key="$route.url">Public Schedules
-          </RouterLink>
-        </li>
-        <li class="nav-item">
-          <RouterLink to="/schedules/ownschedules" class="nav-link" active-class="active"
-            :class="{ disabled: !store.isLoggedIn }" :key="$route.url">Own Schedules</RouterLink>
-        </li>
-        <li class="nav-item">
-          <RouterLink to="/account" class="nav-link" active-class="active" :class="{ disabled: !store.isLoggedIn }">
-            Account</RouterLink>
-        </li>
-        <li class="nav-item">
-          <RouterLink to="/schedules/create" class="btn border-primary text-primary mx-2" active-class="active"
-            :class="{ disabled: !store.isLoggedIn }">Create a
-            Schedule</RouterLink>
-        </li>
-        <li class="nav-item">
-          <RouterLink to="/" class="nav-link" active-class="active" v-if="store.isLoggedIn">Logout</RouterLink>
-          <RouterLink to="/" class="nav-link" active-class="active" v-else>Login</RouterLink>
-        </li>
-      </ul>
-    </header>
-  </div>
+    <ul class="footer fixed-bottom py-3 nav nav-pills d-flex justify-content-center">
+      <li class="nav-item">
+        <RouterLink to="/home" class="nav-link link-light"> Home </RouterLink>
+      </li>
+      <li class="nav-item">
+        <RouterLink to="/quiz" class="nav-link link-light"> Quiz </RouterLink>
+      </li>
+      <li class="nav-item">
+        <RouterLink to="/shop" class="nav-link link-light"> Shop </RouterLink>
+      </li>
+      <li class="nav-item">
+        <RouterLink to="/challenge" class="nav-link link-light"> Challenge </RouterLink>
+      </li>
+    </ul>
 </template>
 
 <script>
@@ -46,8 +28,7 @@ export default {
 </script>
 
 <style>
-.disabled {
-  opacity: 0.5;
-  pointer-events: none;
+.footer {
+  background-color: #0e0e0e;
 }
 </style>
