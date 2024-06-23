@@ -1,18 +1,18 @@
 <template>
-    <ul class="footer fixed-bottom py-3 nav nav-pills d-flex justify-content-center">
-      <li class="nav-item">
-        <RouterLink to="/home" class="nav-link link-light"> Home </RouterLink>
-      </li>
-      <li class="nav-item">
-        <RouterLink to="/quiz" class="nav-link link-light"> Quiz </RouterLink>
-      </li>
-      <li class="nav-item">
-        <RouterLink to="/shop" class="nav-link link-light"> Shop </RouterLink>
-      </li>
-      <li class="nav-item">
-        <RouterLink to="/challenge" class="nav-link link-light"> Challenge </RouterLink>
-      </li>
-    </ul>
+  <ul v-if="user" class="footer fixed-bottom py-3 nav nav-pills d-flex justify-content-center">
+    <li class="nav-item" v-if="user.role == 'ROLE_USER'">
+      <RouterLink to="/home" class="nav-link link-light"> Home </RouterLink>
+    </li>
+    <li class="nav-item" v-if="user.role == 'ROLE_USER'">
+      <RouterLink to="/quiz" class="nav-link link-light"> Quiz </RouterLink>
+    </li>
+    <li class="nav-item" v-if="user.role == 'ROLE_USER'">
+      <RouterLink to="/shop" class="nav-link link-light"> Shop </RouterLink>
+    </li>
+    <li class="nav-item" v-if="user.role == 'ROLE_USER'">
+      <RouterLink to="/challenge" class="nav-link link-light"> Challenge </RouterLink>
+    </li>
+  </ul>
 </template>
 
 <script>
@@ -23,6 +23,11 @@ export default {
   setup() {
     const store = userStore();
     return { store };
+  },
+  data() {
+    return {
+      user: JSON.parse(localStorage.getItem("user")),
+    }
   }
 };
 </script>

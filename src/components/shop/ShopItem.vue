@@ -1,10 +1,29 @@
 <script>
+import axios from '../../axios-auth';
+
 
 export default {
     name: "ShopItem",
     methods: {
-        buyItem() {
-            alert("bought item");
+        buyItem(item) {
+            const user = JSON.parse(localStorage.getItem('user'))
+
+            if (user.points < item.points) {
+                alert('You do not have enough points to buy this item!')
+                return
+            }
+
+            axios.post('/shop/buy', {
+                itemId: item.itemId,
+                userId: user.userId
+            })
+                .then(response => {
+                    alert('Item bought successfully!')
+                    localStorage.setItem('user', JSON.stringify(response.data))
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         }
     },
     props: {
@@ -20,13 +39,14 @@ export default {
     <div class="container col-5" :data-bs-target="'exampleModal' + item.itemId">
         <img :src="'./images/' + item.title + '.png'" alt="shop item" style="width: 150px; height: 150px;">
         <h3> {{ item.title }} </h3>
-        <button type="button" class="btn" data-bs-toggle="modal" :data-bs-target="'#exampleModal'+item.itemId">
+        <button type="button" class="btn" data-bs-toggle="modal" :data-bs-target="'#exampleModal' + item.itemId">
             Buy for {{ item.points }}
         </button>
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" :id="'exampleModal'+item.itemId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" :id="'exampleModal' + item.itemId" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -34,12 +54,13 @@ export default {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Description: {{ item.explanation }}
+                    {{ item.explanation }}
+                    <br>
                     Points: {{ item.points }}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn">Buy</button>
+                    <button type="button" class="btn" @click="buyItem(item)">Buy</button>
                 </div>
             </div>
         </div>

@@ -24,12 +24,13 @@ export default {
     <div class="container d-flex row justify-content-center">
         <!-- profile pic -->
         <div class="col-12 d-flex justify-content-center my-2">
-            <img :src="'/public/images//users/'+ user.username +'.png'" alt="profile picture" style="width: 200px; height: 200px;">
+            <img :src="'/public/images//users/' + user.username + '.png'" alt="profile picture"
+                style="width: 200px; height: 200px;">
         </div>
 
         <!-- name -->
         <div class="col-12 d-flex justify-content-center my-2">
-            <h1> {{user.username}} </h1>
+            <h1> {{ user.username }} </h1>
         </div>
 
         <!-- points -->

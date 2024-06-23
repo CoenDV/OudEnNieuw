@@ -15,7 +15,7 @@ export default {
 </script>
 
 <template>
-  <navigation />
+  <navigation :key="$route.fullPath"/>
   <routerView> </routerView>
 </template>
 

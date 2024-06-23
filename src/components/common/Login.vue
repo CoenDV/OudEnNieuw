@@ -14,6 +14,7 @@ export default {
     data() {
         return {
             user: null,
+            username: "",
         }
     },
     beforeMount() {
@@ -27,7 +28,7 @@ export default {
         login(username) {
             this.store.login(username)
                 .then(() => {
-                    router.push({ path: '/home' })
+                    router.push({ path: '/home' });
                 })
                 .catch(error => {
                     console.log(error);
