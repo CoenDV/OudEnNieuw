@@ -12,7 +12,8 @@ export default {
             activeChallenge: null,
             challengeCode: '',
             user: JSON.parse(localStorage.getItem("user")),
-            deadlineTimer: null
+            deadlineTimer: JSON.parse(localStorage.getItem("deadline")),
+            errorMessage: ''
         }
     },
     methods: {
@@ -41,6 +42,7 @@ export default {
                 })
                 .catch(error => {
                     console.log(error);
+                    this.errorMessage = error.response.data;
                 });
         },
         cancelChallenge() {
@@ -96,6 +98,11 @@ export default {
                 <p class="card-text">{{ activeChallenge.explanation }}</p>
                 <p class="card-text">deadline: {{ deadlineTimer }}</p>
             </div>
+        </div>
+
+        <!-- Error message -->
+        <div class="alert alert-danger mt-3" role="alert" v-if="errorMessage != ''">
+            {{ errorMessage }}
         </div>
 
     </div>
