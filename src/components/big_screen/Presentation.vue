@@ -40,7 +40,7 @@ export default {
 
             if (timeDiff < 0) {
                 clearInterval(this.countdownTimer);
-                document.getElementById('countdown').innerHTML = 'Happy Midnight!';
+                document.getElementById('countdown').innerHTML = 'Happy New Year!';
             }
         }
     },
@@ -58,7 +58,7 @@ export default {
 
 <template>
     <Header></Header>
-    <div class="row">
+    <div class="container-fluid row">
         <!-- Active Boosters-->
         <div class="col-2 text-center mt-5">
             <h2 class="text-light">Active Boosters</h2>

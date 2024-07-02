@@ -41,17 +41,22 @@ export default {
         });
 
         this.stompClient.onConnect = (frame) => {
-            this.isActive = true;
             console.log("Connected: " + frame);
 
             // subscribe for new questions
             this.stompClient.subscribe('/topic/quiz-mainscreen', (result) => {
+                this.isActive = true;
                 const Response = JSON.parse(result.body);
                 console.log("Received: " + JSON.stringify(Response));
-                this.question = Response.question;
-                this.answers = Response.options;
-                this.questionNr++;
-                this.isAnwsered = false;
+
+                if (Response == true) {
+                    this.isActive = true;
+                } else {
+                    this.question = Response.question;
+                    this.answers = Response.options;
+                    this.questionNr++;
+                    this.isAnwsered = false;
+                }
             });
             // subscribe for answering questions
             this.stompClient.subscribe('/topic/greetings', (result) => {
@@ -61,6 +66,7 @@ export default {
                     if (Response.points > 0) {
                         alert("Correct answer!");
                         localStorage.setItem('user', JSON.stringify(Response.user));
+                        this.user = Response.user;
                     } else {
                         alert("Wrong answer!");
                     }
@@ -78,6 +84,9 @@ export default {
         };
 
         this.stompClient.activate();
+    },
+    beforeDestroy() {
+        this.stompClient.deactivate();
     }
 };
 </script>
@@ -90,7 +99,7 @@ export default {
     </div>
 
     <div v-else class="container-fluid mx-1 mt-5">
-        <h1 class="text-center text-light"> Question Nummer: {{ questionNr }}</h1>
+        <h1 class="text-center text-light"> Points: {{ user.points }} </h1>
         <img v-if="answers[0]" src="/public/images/buttonRed.png" alt="quiz" class="m-1"
             style="width: 47%; height: 47%;" @click="sendAnswer(0)">
         <img v-if="answers[1]" src="/public/images/buttonBlue.png" alt="quiz" class="m-1"

@@ -11,6 +11,7 @@ export default {
         return {
             loggedIn: false,
             users: [],
+            quizStarted: false,
         }
     },
     methods: {
@@ -36,6 +37,29 @@ export default {
             axios.put('/login', { username: username, points: points })
                 .then(response => {
                     console.log(response.data);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
+        startQuiz() {
+            axios.post('/quiz/start')
+                .then(response => {
+                    console.log(response.data);
+                    if (response.data)
+                        this.quizStarted = true;
+
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
+        nextQuestion() {
+            axios.post('/quiz/next')
+                .then(response => {
+                    console.log(response.data);
+                    if (!response.data)
+                        this.quizStarted = false;
                 })
                 .catch(error => {
                     console.log(error);
@@ -82,8 +106,15 @@ export default {
                 <input id="points" type="number" class="form-control mt-3" placeholder="Amount of points">
                 <button class="btn col-12 mt-3" @click="addPoints">Add points</button>
             </div>
-            <div class="card col-5 p-3 m-3">
-                <h2 class="text-center text-light">Add points to player</h2>
+            
+            <div v-if="!quizStarted" class="card col-5 p-3 m-3">
+                <h2 class="text-center text-light"> Start Quiz </h2>
+                <button class="btn col-12 mt-3" @click="startQuiz">Start Quiz</button>
+            </div>
+
+            <div v-else class="card col-5 p-3 m-3">
+                <h2 class="text-center text-light"> Next Question </h2>
+                <button class="btn col-12 mt-3" @click="nextQuestion">Next Question</button>
             </div>
         </div>
     </section>
