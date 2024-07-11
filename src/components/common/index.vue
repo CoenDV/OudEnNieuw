@@ -1,5 +1,6 @@
 <script>
 import Header from './../Header.vue';
+import axios from './../../axios-auth';
 
 export default {
     name: "Index",
@@ -11,10 +12,20 @@ export default {
             user: JSON.parse(localStorage.getItem("user"))
         }
     },
+    mounted() {
+        // get points of logged in user
+        axios.get("/login/" + this.user.username + "/points")
+            .then(response => {
+                this.user.points = response.data;
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    },
     beforeCreate() {
-        if (localStorage.getItem("user") == null) {
-            window.location.href = "/"
-        }
+        if (localStorage.getItem("user") == null)
+            window.location.href = "/";
+        this.user = JSON.parse(localStorage.getItem("user"));
     }
 };
 </script>

@@ -87,7 +87,7 @@ export default {
         <div class="card" v-if="activeChallenge == null || activeChallenge == undefined || activeChallenge == ''">
             <div class="card-body">
                 <h5 class="card-title">Active Challenge</h5>
-                <p class="card-text">No active challenge</p>
+                <p class="card-text">Je hebt nog geen challenge, saai...</p>
             </div>
         </div>
 

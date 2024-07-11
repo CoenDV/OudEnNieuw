@@ -46,8 +46,7 @@ export default {
             axios.post('/quiz/start')
                 .then(response => {
                     console.log(response.data);
-                    if (response.data)
-                        this.quizStarted = true;
+                    this.quizStarted = true;
 
                 })
                 .catch(error => {
@@ -75,8 +74,9 @@ export default {
 <template>
     <Header></Header>
 
-    <section v-if="!loggedIn" class="container d-flex align-items-center justify-content-center mt-5">
-        <div class="card col-3 p-3">
+    <!-- login form -->
+    <section v-if="!loggedIn" class="container d-flex align-items-center justify-content-center mt-5 ">
+        <div class="card p-3">
             <img src="/public/images/logo.png" class="card-img-top img-fluid mx-auto" alt="...">
             <div class="card-body">
                 <form>
@@ -90,14 +90,17 @@ export default {
         </div>
     </section>
 
+    <!-- admin panel -->
     <section v-else class="container d-flex align-items-center justify-content-center mt-5 row">
         <div class="row justify-content-center mt-5">
             <div class="card col-12 p-3">
                 <h1 class="text-center text-light">Admin Panel</h1>
             </div>
         </div>
+
         <div class="row justify-content-center mt-5">
-            <div class="card col-5 p-3 m-3">
+            <!-- add points -->
+            <div class="card p-3 m-3">
                 <h2 class="text-center text-light">Add points to player</h2>
                 <select id="userOptions" class="form-select" aria-label="Default select example">
                     <option selected>Select a player</option>
@@ -106,13 +109,15 @@ export default {
                 <input id="points" type="number" class="form-control mt-3" placeholder="Amount of points">
                 <button class="btn col-12 mt-3" @click="addPoints">Add points</button>
             </div>
-            
-            <div v-if="!quizStarted" class="card col-5 p-3 m-3">
+
+            <!-- start quiz -->
+            <div v-if="!quizStarted" class="card p-3 m-3">
                 <h2 class="text-center text-light"> Start Quiz </h2>
                 <button class="btn col-12 mt-3" @click="startQuiz">Start Quiz</button>
             </div>
 
-            <div v-else class="card col-5 p-3 m-3">
+            <!-- next question -->
+            <div v-else class="card p-3 m-3">
                 <h2 class="text-center text-light"> Next Question </h2>
                 <button class="btn col-12 mt-3" @click="nextQuestion">Next Question</button>
             </div>

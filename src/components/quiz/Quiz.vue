@@ -94,11 +94,11 @@ export default {
 <template>
     <Header></Header>
 
-    <div v-if="!isActive" class="container-fluid mx-1 mt-5">
+    <div v-if="!isActive" class="container-fluid mt-5">
         <h1 class="text-center text-light">No Quiz active at the moment...</h1>
     </div>
 
-    <div v-else class="container-fluid mx-1 mt-5">
+    <div v-else class="container-fluid mt-5">
         <h1 class="text-center text-light"> Points: {{ user.points }} </h1>
         <img v-if="answers[0]" src="/public/images/buttonRed.png" alt="quiz" class="m-1"
             style="width: 47%; height: 47%;" @click="sendAnswer(0)">

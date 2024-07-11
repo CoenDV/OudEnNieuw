@@ -12,7 +12,7 @@ export default {
     data() {
         return {
             ShopItems: [],
-            points: JSON.parse(localStorage.getItem('user')).points
+            user: JSON.parse(localStorage.getItem('user')),
         }
     },
     methods: {
@@ -29,6 +29,16 @@ export default {
     },
     mounted() {
         this.getShopItems();
+
+        // get points of logged in user
+        axios.get("/login/" + this.user.username + "/points")
+            .then(response => {
+                this.user.points = response.data;
+                localStorage.setItem('user', JSON.stringify(this.user));
+            })
+            .catch(error => {
+                console.log(error);
+            });
     }
 };
 </script>
@@ -36,11 +46,14 @@ export default {
 <template>
     <Header></Header>
     <div class="container">'
-        <div class="row mb-5">
-            <h1 class="text-light d-flex justify-content-center">Points: {{ points }}</h1>
+        <div class="row mb-2">
+            <h1 class="text-light d-flex justify-content-center">Points: {{ user.points }}</h1>
         </div>
-        <div class="row">
+        <div class="row mb-5">
             <ShopItem v-for="item in ShopItems" :key="item.id" :item="item"></ShopItem>
+        </div>
+        <div class="mb-5">
+            hahah dit zie je niet
         </div>
     </div>
 </template>

@@ -1,17 +1,39 @@
 <script>
 import axios from './../../axios-auth';
 import Header from './../Header.vue';
+import { ref, defineAsyncComponent } from 'vue';
+import shopPopUp from '../shop/shopPopUp.vue';
 
 export default {
     name: "Presentation",
     components: {
         Header,
+        shopPopUp
     },
     data() {
         return {
             countdownTimer: null,
             users: [],
+            item: {},
+            stompClient: null,
         }
+    },
+    setup() {
+        const asyncComponent = ref(null);
+
+        const loadComponent = () => {
+            asyncComponent.value = defineAsyncComponent(() =>
+                import('../shop/shopPopUp.vue'),
+                setTimeout(() => {
+                    asyncComponent.value = null;
+                }, 10000)
+            );
+        };
+
+        return {
+            asyncComponent,
+            loadComponent,
+        };
     },
     methods: {
         getUsers() {
@@ -49,15 +71,56 @@ export default {
 
         this.updateCountdown(); // initial call to display the countdown immediately
         this.countdownTimer = setInterval(this.updateCountdown, 1000);
+
+        this.stompClient = new StompJs.Client({
+            brokerURL: 'ws://localhost:8080/gs-guide-websocket'
+        });
+
+        this.stompClient.onConnect = (frame) => {
+            console.log("Connected: " + frame);
+            this.stompClient.subscribe('/topic/quiz-mainscreen', (result) => {
+                const Response = JSON.parse(result.body);
+                console.log("Received: " + JSON.stringify(Response));
+
+                if (Response == true) {
+                    this.isActive = true;
+                } else if (Response == false) {
+                    this.isActive = false;
+                    this.$router.push({ path: '/presentation' });
+                } else if (Response.objectType == 'SHOPITEM') {
+                    this.item = Response;
+                    // open shop item popup
+                    this.loadComponent();
+                } else if (Response.objectType == 'QUESTION') {
+                    this.question = Response.question;
+                    this.answers = Response.options;
+                }
+            });
+        }
+
+        this.stompClient.onWebSocketError = (error) => {
+            console.error('Error with websocket', error);
+        };
+
+        this.stompClient.onStompError = (frame) => {
+            console.error('Broker reported error: ' + frame.headers['message']);
+            console.error('Additional details: ' + frame.body);
+        };
+
+        this.stompClient.activate();
     },
     beforeDestroy() {
         clearInterval(this.countdownTimer);
+        this.stompClient.deactivate();
     }
 };
 </script>
 
 <template>
+    <component :is="asyncComponent" v-if="asyncComponent" :item="this.item"></component>
+
     <Header></Header>
+    
     <div class="container-fluid row">
         <!-- Active Boosters-->
         <div class="col-2 text-center mt-5">
@@ -72,8 +135,9 @@ export default {
                     <img :src="'./../../../public/images/users/' + users[0].username + '.png'" alt="Quiz"
                         class="img-fluid">
                     <img src="./../../../public/images/golden-crown-emblem-with-wreath-frame.png" alt="Quiz"
-                        class="position-absolute start-50 translate-middle" style="width:135%; height: 135%; margin-top: 32%">
-                        <p>{{ users[0].username }} - {{ users[0].points }} points</p>
+                        class="position-absolute start-50 translate-middle"
+                        style="width:135%; height: 135%; margin-top: 32%">
+                    <p>{{ users[0].username }} - {{ users[0].points }} points</p>
                 </div>
             </div>
             <!--top 3-->

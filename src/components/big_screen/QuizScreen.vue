@@ -1,11 +1,14 @@
 <script>
-import { routerKey } from 'vue-router';
 import Header from './../Header.vue';
+import { ref, defineAsyncComponent } from 'vue';
+import shopPopUp from '../shop/shopPopUp.vue';
+
 
 export default {
     name: "QuizScreen",
     components: {
         Header,
+        shopPopUp
     },
     data() {
         return {
@@ -13,12 +16,31 @@ export default {
 
             answers: [],
 
+            item: {},
+
             isActive: false,
             stompClient: null,
         }
     },
     methods: {
 
+    },
+    setup() {
+        const asyncComponent = ref(null);
+
+        const loadComponent = () => {
+            asyncComponent.value = defineAsyncComponent(() =>
+                import('../shop/shopPopUp.vue'),
+                setTimeout(() => {
+                    asyncComponent.value = null;
+                }, 10000)
+            );
+        };
+
+        return {
+            asyncComponent,
+            loadComponent,
+        };
     },
     mounted() {
         this.stompClient = new StompJs.Client({
@@ -28,7 +50,6 @@ export default {
         this.stompClient.onConnect = (frame) => {
             console.log("Connected: " + frame);
             this.stompClient.subscribe('/topic/quiz-mainscreen', (result) => {
-                this.isActive = true;
                 const Response = JSON.parse(result.body);
                 console.log("Received: " + JSON.stringify(Response));
 
@@ -37,8 +58,11 @@ export default {
                 } else if (Response == false) {
                     this.isActive = false;
                     this.$router.push({ path: '/presentation' });
-                }
-                else {
+                } else if (Response.objectType == 'SHOPITEM') {
+                    this.item = Response;
+                    // open shop item popup
+                    this.loadComponent();
+                } else if (Response.objectType == 'QUESTION') {
                     this.question = Response.question;
                     this.answers = Response.options;
                 }
@@ -63,6 +87,8 @@ export default {
 </script>
 
 <template>
+    <component :is="asyncComponent" v-if="asyncComponent" :item="this.item"></component>
+
     <Header></Header>
 
     <div v-if="!isActive" class="container-fluid mt-5">
