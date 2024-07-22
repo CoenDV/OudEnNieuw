@@ -37,7 +37,7 @@ export default {
     },
     mounted() {
         this.stompClient = new StompJs.Client({
-            brokerURL: 'ws://localhost:8080/gs-guide-websocket'
+            brokerURL: this.$webSocketLink + 'gs-guide-websocket'
         });
 
         this.stompClient.onConnect = (frame) => {
@@ -100,14 +100,14 @@ export default {
 
     <div v-else class="container-fluid mt-5">
         <h1 class="text-center text-light"> Points: {{ user.points }} </h1>
-        <img v-if="answers[0]" src="/images/buttonRed.png" alt="quiz" class="m-1"
-            style="width: 47%; height: 47%;" @click="sendAnswer(0)">
-        <img v-if="answers[1]" src="/images/buttonBlue.png" alt="quiz" class="m-1"
-            style="width: 47%; height: 47%;" @click="sendAnswer(1)">
-        <img v-if="answers[2]" src="/images/buttonYellow.png" alt="quiz" class="m-1"
-            style="width: 47%; height: 47%;" @click="sendAnswer(2)">
-        <img v-if="answers[3]" src="/images/buttonGreen.png" alt="quiz" class="m-1"
-            style="width: 47%; height: 47%;" @click="sendAnswer(3)">
+        <img v-if="answers[0]" src="/images/buttonRed.png" alt="quiz" class="m-1" style="width: 47%; height: 47%;"
+            @click="sendAnswer(0)">
+        <img v-if="answers[1]" src="/images/buttonBlue.png" alt="quiz" class="m-1" style="width: 47%; height: 47%;"
+            @click="sendAnswer(1)">
+        <img v-if="answers[2]" src="/images/buttonYellow.png" alt="quiz" class="m-1" style="width: 47%; height: 47%;"
+            @click="sendAnswer(2)">
+        <img v-if="answers[3]" src="/images/buttonGreen.png" alt="quiz" class="m-1" style="width: 47%; height: 47%;"
+            @click="sendAnswer(3)">
     </div>
 </template>
 

@@ -73,7 +73,7 @@ export default {
         this.countdownTimer = setInterval(this.updateCountdown, 1000);
 
         this.stompClient = new StompJs.Client({
-            brokerURL: 'ws://localhost:8080/gs-guide-websocket'
+            brokerURL: this.$webSocketLink + 'gs-guide-websocket'
         });
 
         this.stompClient.onConnect = (frame) => {
