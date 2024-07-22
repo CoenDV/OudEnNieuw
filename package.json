@@ -2,7 +2,6 @@
   "name": "vue-routing-starter",
   "version": "0.0.0",
   "private": true,
-  "homepage" : "https://coendv.github.io/OudEnNieuw/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
