@@ -35,7 +35,7 @@ export default {
     <div class="container d-flex row justify-content-center">
         <!-- profile pic -->
         <div class="col-12 d-flex justify-content-center my-2">
-            <img :src="'/public/images//users/' + user.username + '.png'" alt="profile picture"
+            <img :src="'/images/users/' + user.username + '.png'" alt="profile picture"
                 style="width: 200px; height: 200px;">
         </div>
 

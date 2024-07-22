@@ -42,7 +42,7 @@ export default {
 
     <section class="container d-flex align-items-center justify-content-center" style="min-height: 100vh">
         <div class="card col-10 p-3">
-            <img src="/public/images/logo.png" class="card-img-top w-75 mx-auto" alt="...">
+            <img src="/images/logo.png" class="card-img-top w-75 mx-auto" alt="...">
             <div class="card-body">
                 <form>
                     <div class="mb-3">

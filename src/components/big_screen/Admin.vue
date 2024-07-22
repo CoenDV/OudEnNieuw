@@ -77,7 +77,7 @@ export default {
     <!-- login form -->
     <section v-if="!loggedIn" class="container d-flex align-items-center justify-content-center mt-5 ">
         <div class="card p-3">
-            <img src="/public/images/logo.png" class="card-img-top img-fluid mx-auto" alt="...">
+            <img src="/images/logo.png" class="card-img-top img-fluid mx-auto" alt="...">
             <div class="card-body">
                 <form>
                     <div class="mb-3">

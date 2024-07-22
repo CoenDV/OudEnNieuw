@@ -100,13 +100,13 @@ export default {
 
     <div v-else class="container-fluid mt-5">
         <h1 class="text-center text-light"> Points: {{ user.points }} </h1>
-        <img v-if="answers[0]" src="/public/images/buttonRed.png" alt="quiz" class="m-1"
+        <img v-if="answers[0]" src="/images/buttonRed.png" alt="quiz" class="m-1"
             style="width: 47%; height: 47%;" @click="sendAnswer(0)">
-        <img v-if="answers[1]" src="/public/images/buttonBlue.png" alt="quiz" class="m-1"
+        <img v-if="answers[1]" src="/images/buttonBlue.png" alt="quiz" class="m-1"
             style="width: 47%; height: 47%;" @click="sendAnswer(1)">
-        <img v-if="answers[2]" src="/public/images/buttonYellow.png" alt="quiz" class="m-1"
+        <img v-if="answers[2]" src="/images/buttonYellow.png" alt="quiz" class="m-1"
             style="width: 47%; height: 47%;" @click="sendAnswer(2)">
-        <img v-if="answers[3]" src="/public/images/buttonGreen.png" alt="quiz" class="m-1"
+        <img v-if="answers[3]" src="/images/buttonGreen.png" alt="quiz" class="m-1"
             style="width: 47%; height: 47%;" @click="sendAnswer(3)">
     </div>
 </template>

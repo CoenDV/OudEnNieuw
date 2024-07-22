@@ -132,9 +132,9 @@ export default {
             <!--top 1-->
             <div v-if="users[0]" class="row mt-2">
                 <div class="col-2 offset-5 position-relative">
-                    <img :src="'./../../../public/images/users/' + users[0].username + '.png'" alt="Quiz"
+                    <img :src="'/images/users/' + users[0].username + '.png'" alt="Quiz"
                         class="img-fluid">
-                    <img src="./../../../public/images/golden-crown-emblem-with-wreath-frame.png" alt="Quiz"
+                    <img src="/images/golden-crown-emblem-with-wreath-frame.png" alt="Quiz"
                         class="position-absolute start-50 translate-middle"
                         style="width:135%; height: 135%; margin-top: 32%">
                     <p>{{ users[0].username }} - {{ users[0].points }} points</p>
@@ -143,12 +143,12 @@ export default {
             <!--top 3-->
             <div v-if="users[1] && users[2]" class="row mt-2">
                 <div class="col-2 offset-4">
-                    <img :src="'./../../../public/images/users/' + users[1].username + '.png'" alt="Quiz"
+                    <img :src="'/images/users/' + users[1].username + '.png'" alt="Quiz"
                         class="img-fluid">
                     <p>{{ users[1].username }} - {{ users[1].points }} points</p>
                 </div>
                 <div class="col-2">
-                    <img :src="'./../../../public/images/users/' + users[2].username + '.png'" alt="Quiz"
+                    <img :src="'/images/users/' + users[2].username + '.png'" alt="Quiz"
                         class="img-fluid">
                     <p>{{ users[2].username }} - {{ users[2].points }} points</p>
                 </div>
@@ -156,17 +156,17 @@ export default {
             <!--top 6-->
             <div v-if="users[3] && users[4] && users[5]" class="row mt-2">
                 <div class="col-2 offset-3">
-                    <img :src="'./../../../public/images/users/' + users[3].username + '.png'" alt="Quiz"
+                    <img :src="'/images/users/' + users[3].username + '.png'" alt="Quiz"
                         class="img-fluid">
                     <p>{{ users[3].username }} - {{ users[3].points }} points</p>
                 </div>
                 <div class="col-2">
-                    <img :src="'./../../../public/images/users/' + users[4].username + '.png'" alt="Quiz"
+                    <img :src="'/images/users/' + users[4].username + '.png'" alt="Quiz"
                         class="img-fluid">
                     <p>{{ users[4].username }} - {{ users[4].points }} points</p>
                 </div>
                 <div class="col-2">
-                    <img :src="'./../../../public/images/users/' + users[5].username + '.png'" alt="Quiz"
+                    <img :src="'/images/users/' + users[5].username + '.png'" alt="Quiz"
                         class="img-fluid">
                     <p>{{ users[5].username }} - {{ users[5].points }} points</p>
                 </div>
