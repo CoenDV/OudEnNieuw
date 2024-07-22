@@ -11,7 +11,7 @@ import Admin from '../components/big_screen/Admin.vue';
 import QuizScreen from '../components/big_screen/QuizScreen.vue';
 
 const router = createRouter({
-  history: createWebHistory('/OudEnNieuw/'),
+  history: createWebHistory(),
   routes: [
     { path: '/', component: Login },
     { path: '/home', component: Home },
@@ -19,8 +19,8 @@ const router = createRouter({
     { path: '/shop', component: Shop },
     { path: '/challenge', component: Challenge },
     { path: '/presentation', component: Presentation },
-    { path: '/admin', component: Admin},
-    { path: '/quizscreen', component: QuizScreen}
+    { path: '/admin', component: Admin },
+    { path: '/quizscreen', component: QuizScreen },
   ]
 })
 
