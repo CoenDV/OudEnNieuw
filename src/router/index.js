@@ -11,7 +11,7 @@ import Admin from '../components/big_screen/Admin.vue';
 import QuizScreen from '../components/big_screen/QuizScreen.vue';
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory('/OudEnNieuw/'),
   routes: [
     { path: '/', component: Login },
     { path: '/home', component: Home },
