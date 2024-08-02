@@ -15,10 +15,12 @@ export default {
             question: '',
 
             answers: [],
+            correctAnswer: '',
 
             item: {},
 
             isActive: false,
+            showAnswer: false,
             stompClient: null,
         }
     },
@@ -60,12 +62,17 @@ export default {
                     this.$router.push({ path: '/presentation' });
                 } else if (Response.objectType == 'SHOPITEM') {
                     this.item = Response;
-                    // open shop item popup
-                    this.loadComponent();
+                    this.loadComponent(); // open shop item popup
                 } else if (Response.objectType == 'QUESTION') {
                     this.question = Response.question;
                     this.answers = Response.options;
+                    this.correctAnswer = Response.answer;
+                    this.showAnswer = false;
+                } else if (Response === "showAnswer") {
+                    console.log("Show answer");
+                    this.showAnswer = true;
                 }
+
             });
         }
 
@@ -110,28 +117,57 @@ export default {
                     </div>
                 </div>
 
-                <div class="row mt-5 d-flex justify-content-center">
-                    <div v-if="answers[0]" class="col-5 position-relative">
-                        <img src="/images/quizDesktop/redButton.png" alt="Red Button"
-                            class="img-fluid">
-                        <h2 class="text-light position-absolute top-50 start-50 translate-middle">{{ answers[0] }}</h2>
+                <div v-if="!showAnswer">
+                    <div class="row mt-5 d-flex justify-content-center">
+                        <div v-if="answers[0]" class="col-5 position-relative">
+                            <img src="/images/quizDesktop/redButton.png" alt="Red Button" class="img-fluid">
+                            <h2 class="text-light position-absolute top-50 start-50 translate-middle">{{ answers[0] }}
+                            </h2>
+                        </div>
+                        <div v-if="answers[1]" class="col-5 position-relative">
+                            <img src="/images/quizDesktop/blueButton.png" alt="Red Button" class="img-fluid">
+                            <h2 class="text-light position-absolute top-50 start-50 translate-middle">{{ answers[1] }}
+                            </h2>
+                        </div>
                     </div>
-                    <div v-if="answers[1]" class="col-5 position-relative">
-                        <img src="/images/quizDesktop/blueButton.png" alt="Red Button"
-                            class="img-fluid">
-                        <h2 class="text-light position-absolute top-50 start-50 translate-middle">{{ answers[1] }}</h2>
+                    <div class="row d-flex justify-content-center mt-4">
+                        <div v-if="answers[2]" class="col-5 position-relative">
+                            <img src="/images/quizDesktop/yellowButton.png" alt="Red Button" class="img-fluid">
+                            <h2 class="text-light position-absolute top-50 start-50 translate-middle">{{ answers[2] }}
+                            </h2>
+                        </div>
+                        <div v-if="answers[3]" class="col-5 position-relative">
+                            <img src="/images/quizDesktop/greenButton.png" alt="Red Button" class="img-fluid">
+                            <h2 class="text-light position-absolute top-50 start-50 translate-middle">{{ answers[3] }}
+                            </h2>
+                        </div>
                     </div>
                 </div>
-                <div class="row d-flex justify-content-center mt-4">
-                    <div v-if="answers[2]" class="col-5 position-relative">
-                        <img src="/images/quizDesktop/yellowButton.png" alt="Red Button"
-                            class="img-fluid">
-                        <h2 class="text-light position-absolute top-50 start-50 translate-middle">{{ answers[2] }}</h2>
+                <div v-else>
+                    <h1 class="text-light text-center mt-5">Het juiste antwoord is:</h1>
+                    <div class="row mt-5 d-flex justify-content-center">
+                        <div v-if="correctAnswer == answers[0]" class="col-5 position-relative">
+                            <img src="/images/quizDesktop/redButton.png" alt="Red Button" class="img-fluid">
+                            <h2 class="text-light position-absolute top-50 start-50 translate-middle">{{ answers[0] }}
+                            </h2>
+                        </div>
+                        <div v-if="correctAnswer == answers[1]" class="col-5 position-relative">
+                            <img src="/images/quizDesktop/blueButton.png" alt="Red Button" class="img-fluid">
+                            <h2 class="text-light position-absolute top-50 start-50 translate-middle">{{ answers[1] }}
+                            </h2>
+                        </div>
                     </div>
-                    <div v-if="answers[3]" class="col-5 position-relative">
-                        <img src="/images/quizDesktop/greenButton.png" alt="Red Button"
-                            class="img-fluid">
-                        <h2 class="text-light position-absolute top-50 start-50 translate-middle">{{ answers[3] }}</h2>
+                    <div class="row d-flex justify-content-center mt-4">
+                        <div v-if="correctAnswer == answers[2]" class="col-5 position-relative">
+                            <img src="/images/quizDesktop/yellowButton.png" alt="Red Button" class="img-fluid">
+                            <h2 class="text-light position-absolute top-50 start-50 translate-middle">{{ answers[2] }}
+                            </h2>
+                        </div>
+                        <div v-if="correctAnswer == answers[3]" class="col-5 position-relative">
+                            <img src="/images/quizDesktop/greenButton.png" alt="Red Button" class="img-fluid">
+                            <h2 class="text-light position-absolute top-50 start-50 translate-middle">{{ answers[3] }}
+                            </h2>
+                        </div>
                     </div>
                 </div>
             </div>

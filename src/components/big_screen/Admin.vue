@@ -63,6 +63,15 @@ export default {
                 .catch(error => {
                     console.log(error);
                 });
+        },
+        showAnswer() {
+            axios.post('/quiz/answer')
+                .then(response => {
+                    console.log(response.data);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         }
     },
     mounted() {
@@ -119,7 +128,10 @@ export default {
             <!-- next question -->
             <div v-else class="card p-3 m-3">
                 <h2 class="text-center text-light"> Next Question </h2>
-                <button class="btn col-12 mt-3" @click="nextQuestion">Next Question</button>
+                <button class="btn col-12 mt-1" @click="nextQuestion">Next Question</button>
+
+                <h2 class="text-center text-light mt-3"> Show Answer </h2>
+                <button class="btn col-12 mt-1" @click="showAnswer">Show Answer</button>
             </div>
         </div>
     </section>
