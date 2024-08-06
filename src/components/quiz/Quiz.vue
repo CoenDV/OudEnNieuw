@@ -127,8 +127,9 @@ export default {
     </div>
 
     <div v-else class="container-fluid">
+        <!-- display answer options -->
         <div v-if="!isAnwsered">
-            <h1 class="text-center text-light"> Points: {{ user.points }} </h1>
+            <h1 class="text-center text-light my-3"> Points: {{ user.points }} </h1>
             <img v-if="answers[0]" src="/images/buttonRed.png" alt="quiz" class="m-1" style="width: 47%; height: 47%;"
                 @click="sendAnswer(0)">
             <img v-if="answers[1]" src="/images/buttonBlue.png" alt="quiz" class="m-1" style="width: 47%; height: 47%;"
@@ -139,6 +140,7 @@ export default {
                 @click="sendAnswer(3)">
             <h1 v-else class="text-center text-light mt-5">Waiting for next Question</h1>
         </div>
+        <!-- display answer status -->
         <div v-else>
             <div v-if="isAnwseredCorrectly == 0">
                 <h1 class="text-center text-light">Je hebt de vraag beantwoord!</h1>

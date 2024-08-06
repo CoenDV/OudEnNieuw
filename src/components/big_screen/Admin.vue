@@ -100,16 +100,16 @@ export default {
     </section>
 
     <!-- admin panel -->
-    <section v-else class="container d-flex align-items-center justify-content-center mt-5 row">
-        <div class="row justify-content-center mt-5">
-            <div class="card col-12 p-3">
+    <section v-else class="container-fluid d-flex justify-content-center ms-1 row">
+        <div class=" justify-content-center mt-3">
+            <div class="card col-12 py-3">
                 <h1 class="text-center text-light">Admin Panel</h1>
             </div>
         </div>
 
-        <div class="row justify-content-center mt-5">
+        <div class=" justify-content-center">
             <!-- add points -->
-            <div class="card p-3 m-3">
+            <div class="card py-3 my-3">
                 <h2 class="text-center text-light">Add points to player</h2>
                 <select id="userOptions" class="form-select" aria-label="Default select example">
                     <option selected>Select a player</option>
@@ -120,19 +120,21 @@ export default {
             </div>
 
             <!-- start quiz -->
-            <div v-if="!quizStarted" class="card p-3 m-3">
+            <div v-if="!quizStarted" class="card py-3 mb-5">
                 <h2 class="text-center text-light"> Start Quiz </h2>
                 <button class="btn col-12 mt-3" @click="startQuiz">Start Quiz</button>
             </div>
 
             <!-- next question -->
-            <div v-else class="card p-3 m-3">
+            <div v-else class="card py-3 mb-5">
                 <h2 class="text-center text-light"> Next Question </h2>
                 <button class="btn col-12 mt-1" @click="nextQuestion">Next Question</button>
 
                 <h2 class="text-center text-light mt-3"> Show Answer </h2>
                 <button class="btn col-12 mt-1" @click="showAnswer">Show Answer</button>
             </div>
+
+            <div class="mb-2">Als je dit ziet heb je een grote telefoon</div>
         </div>
     </section>
 </template>
