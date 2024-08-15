@@ -25,6 +25,9 @@ export default {
                 .catch(error => {
                     console.log(error);
                 });
+        },
+        updatePoints() {
+            this.user = JSON.parse(localStorage.getItem('user'));
         }
     },
     mounted() {
@@ -50,7 +53,7 @@ export default {
             <h1 class="text-light d-flex justify-content-center">Points: {{ user.points }}</h1>
         </div>
         <div class="row mb-5">
-            <ShopItem v-for="item in ShopItems" :key="item.id" :item="item"></ShopItem>
+            <ShopItem v-on:changeUser="updatePoints" v-for="item in ShopItems" :key="item.id" :item="item"></ShopItem>
         </div>
         <div class="mb-5">
             hahah dit zie je niet

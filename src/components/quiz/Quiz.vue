@@ -80,7 +80,8 @@ export default {
                 const Response = JSON.parse(result.body);
                 if (Response.user.userId === this.user.userId) {
                     console.log("Received: " + JSON.stringify(Response));
-                    if (Response.points > 0) {                        localStorage.setItem('user', JSON.stringify(Response.user));
+                    if (Response.points > 0) {                        
+                        localStorage.setItem('user', JSON.stringify(Response.user));
                         this.user = Response.user;
                     }
                 }
