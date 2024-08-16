@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Login from '../components/common/Login.vue';
 import Home from '../components/common/index.vue';
 import Quiz from '../components/quiz/Quiz.vue';
+import QuizEnded from '../components/quiz/QuizEnded.vue';
 import Shop from '../components/shop/Shop.vue';
 import Challenge from '../components/challenge/Challenge.vue';
 
@@ -16,6 +17,7 @@ const router = createRouter({
     { path: '/', component: Login },
     { path: '/home', component: Home },
     { path: '/quiz', component: Quiz },
+    { path: '/quiz-ended', component: QuizEnded },
     { path: '/shop', component: Shop },
     { path: '/challenge', component: Challenge },
     { path: '/presentation', component: Presentation },

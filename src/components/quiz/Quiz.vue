@@ -56,15 +56,16 @@ export default {
                 if (Response == true) {
                     this.isActive = true;
                 } else if (Response == false) {
+                    console.log("Quiz has ended!");
                     this.isActive = false;
+                    this.$router.push('/home');
                 } else if (Response === "showAnswer") {
-                    console.log("Show answer");
                     this.isAnwsered = true;
-                    if (this.answeredQuestion === this.correctAnswer) {
+                    if (this.answeredQuestion === this.correctAnswer)
                         this.isAnwseredCorrectly = 1;
-                    } else {
+                    else
                         this.isAnwseredCorrectly = 2;
-                    }
+
                 }
                 else {
                     this.question = Response.question;
@@ -80,7 +81,7 @@ export default {
                 const Response = JSON.parse(result.body);
                 if (Response.user.userId === this.user.userId) {
                     console.log("Received: " + JSON.stringify(Response));
-                    if (Response.points > 0) {                        
+                    if (Response.points > 0) {
                         localStorage.setItem('user', JSON.stringify(Response.user));
                         this.user = Response.user;
                     }
@@ -148,11 +149,13 @@ export default {
                 <img src="/images/neutralAnswer.png" alt="Correct Answer" style="width: 100%; height: 100%;">
             </div>
             <div v-if="isAnwseredCorrectly == 1">
-                <h1 class="text-center text-light">Je hebt de vraag <span style="color: #26890C;">GOED</span>  beantwoord!</h1>
+                <h1 class="text-center text-light">Je hebt de vraag <span style="color: #26890C;">GOED</span>
+                    beantwoord!</h1>
                 <img src="/images/correctAnswer.png" alt="Correct Answer" style="width: 100%; height: 100%;">
             </div>
             <div v-else-if="isAnwseredCorrectly == 2">
-                <h1 class="text-center text-light">Je hebt de vraag <span style="color: #E21B3C;">FOUT</span> beantwoord!</h1>
+                <h1 class="text-center text-light">Je hebt de vraag <span style="color: #E21B3C;">FOUT</span>
+                    beantwoord!</h1>
                 <img src="/images/wrongAnswer.png" alt="Wrong Answer" style="width: 100%; height: 100%;">
             </div>
         </div>
