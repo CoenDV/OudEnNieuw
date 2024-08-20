@@ -36,8 +36,8 @@ export default {
         // get points of logged in user
         axios.get("/login/" + this.user.username + "/points")
             .then(response => {
-                this.user.points = response.data;
-                localStorage.setItem('user', JSON.stringify(this.user));
+                const Response = response.data;
+                this.user.points = Response.points;
             })
             .catch(error => {
                 console.log(error);

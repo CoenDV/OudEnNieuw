@@ -49,7 +49,7 @@ export default {
 
 <template>
     <div class="container col-5 mb-1" :data-bs-target="'exampleModal' + item.itemId">
-        <img :src="'/images/' + item.title + '.png'" alt="shop item" style="width: 150px; height: 150px;">
+        <img :src="'/images/shop/' + item.title + '.webp'" alt="shop item" style="width: 120px; height: 120px;">
         <h3> {{ item.title }} </h3>
         <button type="button" class="btn" data-bs-toggle="modal" :data-bs-target="'#exampleModal' + item.itemId">
             Buy for {{ item.points }}
