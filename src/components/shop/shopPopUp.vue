@@ -32,7 +32,7 @@ export default {
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body row justify-content-center">
-                    <img :src="'./images/shop/' + item.title + '.png'" alt="shop item" style="width: 150px; height: 150px;">
+                    <img :src="'./images/shop/' + item.title + '.webp'" alt="shop item" style="width: 150px; height: 150px;">
                     <h1 class="modal-title text-center">{{ item.title }}</h1>
                     <p class="text-center">{{ item.explanation }}</p>
                     <p class="text-center">Points: {{ item.points }}</p>
