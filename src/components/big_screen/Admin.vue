@@ -37,6 +37,7 @@ export default {
             axios.put('/login', { username: username, points: points })
                 .then(response => {
                     console.log(response.data);
+                    localStorage.setItem('user', JSON.stringify(response.data))
                 })
                 .catch(error => {
                     console.log(error);

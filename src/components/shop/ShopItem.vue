@@ -48,31 +48,20 @@ export default {
 </script>
 
 <template>
-    <div class="container col-5 mb-1" :data-bs-target="'exampleModal' + item.itemId">
-        <img :src="'/images/shop/' + item.title + '.webp'" alt="shop item" style="width: 120px; height: 120px;">
-        <h3> {{ item.title }} </h3>
-        <button type="button" class="btn" data-bs-toggle="modal" :data-bs-target="'#exampleModal' + item.itemId">
-            Buy for {{ item.points }}
-        </button>
+    <div class="container col-12 mb-2 " :data-bs-target="'exampleModal' + item.itemId">
+        <span type="button" class="" data-bs-toggle="modal" :data-bs-target="'#exampleModal' + item.itemId">
+            <img :src="'/images/shop/' + item.title + '.png'" alt="shop item" class="img-fluid">
+        </span>
     </div>
 
     <!-- Modal -->
     <div class="modal fade" :id="'exampleModal' + item.itemId" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header ">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">{{ item.title }}</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    {{ item.explanation }}
-                    <br>
-                    Points: {{ item.points }}
-                    <br>
-                    <h3 :class="changeColor()">{{ message }}</h3>
-                </div>
-                <div class="modal-footer ">
+            <div class="modal-content bg-transparent">
+                <img :src="'/images/shop/' + item.title + '.png'" alt="shop item" class="img-fluid">
+                <h3 class="p-1 rounded" :class="changeColor()" style="background-color: #0e0e0e;">{{ message }}</h3>
+                <div class="modal-footer bg-transparent border-0 justify-content-center">
                     <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
                     <button type="button" class="btn" @click="buyItem(item)">Buy</button>
                 </div>
