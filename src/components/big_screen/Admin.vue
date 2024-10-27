@@ -12,6 +12,8 @@ export default {
             loggedIn: false,
             users: [],
             quizStarted: false,
+            question: '',
+            explanation: '',
         }
     },
     methods: {
@@ -65,7 +67,7 @@ export default {
                     console.log(error);
                 });
         },
-        showAnswer() {
+        showAnswerMethod() {
             axios.post('/quiz/answer')
                 .then(response => {
                     console.log(response.data);
@@ -77,6 +79,49 @@ export default {
     },
     mounted() {
         this.getUsers();
+
+        this.stompClient = new StompJs.Client({
+            brokerURL: this.$webSocketLink + 'gs-guide-websocket'
+        });
+
+        this.stompClient.onConnect = (frame) => {
+            console.log("Connected: " + frame);
+            this.stompClient.subscribe('/topic/quiz-mainscreen', (result) => {
+                const Response = JSON.parse(result.body);
+                console.log("Received: " + JSON.stringify(Response));
+
+                if (Response == true) {
+                    this.isActive = true;
+                } else if (Response == false) {
+                    this.isActive = false;
+                    this.$router.push({ path: '/presentation' });
+                } else if (Response.objectType == 'SHOPITEM') {
+                    this.item = Response;
+                    this.loadComponent(); // open shop item popup
+                } else if (Response.objectType == 'QUESTION') {
+                    this.question = Response.question;
+                    this.answers = Response.options;
+                    this.correctAnswer = Response.answer;
+                    this.showAnswer = false;
+                    this.explanation = Response.explanation;
+                } else if (Response === "showAnswer") {
+                    console.log("Show answer");
+                    this.showAnswer = true;
+                }
+
+            });
+        }
+
+        this.stompClient.onWebSocketError = (error) => {
+            console.error('Error with websocket', error);
+        };
+
+        this.stompClient.onStompError = (frame) => {
+            console.error('Broker reported error: ' + frame.headers['message']);
+            console.error('Additional details: ' + frame.body);
+        };
+
+        this.stompClient.activate();
     }
 };
 </script>
@@ -132,7 +177,15 @@ export default {
                 <button class="btn col-12 mt-1" @click="nextQuestion">Next Question</button>
 
                 <h2 class="text-center text-light mt-3"> Show Answer </h2>
-                <button class="btn col-12 mt-1" @click="showAnswer">Show Answer</button>
+                <button class="btn col-12 mt-1" @click="showAnswerMethod">Show Answer</button>
+            </div>
+
+            <!-- question explanation -->
+            <div class="card py-3 mb-5">
+                <h2 class="text-center text-light"> Question Explanation </h2>
+                <p class="text-center"> {{ question }} </p>
+                <p class="text-center"> {{ answers }} </p>
+                <p class="text-center"> {{ explanation }} </p>
             </div>
 
             <div class="mb-2">Als je dit ziet heb je een grote telefoon</div>

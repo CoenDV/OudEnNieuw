@@ -26,7 +26,7 @@ export default {
                 import('../shop/shopPopUp.vue'),
                 setTimeout(() => {
                     asyncComponent.value = null;
-                }, 10000)
+                }, 20000)
             );
         };
 
@@ -81,6 +81,7 @@ export default {
             this.stompClient.subscribe('/topic/quiz-mainscreen', (result) => {
                 const Response = JSON.parse(result.body);
                 console.log("Received: " + JSON.stringify(Response));
+                this.getUsers();
 
                 if (Response == true) {
                     this.isActive = true;
