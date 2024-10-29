@@ -66,7 +66,7 @@ export default {
     /* https://animate.style */
     animation: jackInTheBox, lightSpeedOutRight;
     animation-duration: 2s, 1s;
-    animation-delay: 0s, 9s;
+    animation-delay: 0s, 19s;
 }
 
 .modal-header {

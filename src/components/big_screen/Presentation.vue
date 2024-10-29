@@ -16,6 +16,7 @@ export default {
             users: [],
             item: {},
             stompClient: null,
+            activeBoosters: [],
         }
     },
     setup() {
@@ -48,6 +49,8 @@ export default {
                 });
         },
         updateCountdown() {
+            this.updateActiveBoosters();
+
             const now = new Date();
             const midnight = new Date();
             midnight.setHours(24, 0, 0, 0); // set time to midnight
@@ -64,6 +67,23 @@ export default {
                 clearInterval(this.countdownTimer);
                 document.getElementById('countdown').innerHTML = 'Happy New Year!';
             }
+        },
+        updateActiveBoosters() {
+            this.activeBoosters.forEach(booster => {
+                // Get the current date
+                let currentDate = new Date();
+
+                // Split the time string into parts
+                let timeParts = booster.duration.split(':');
+
+                // add the time to the current date
+                let duration = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), currentDate.getHours() + parseInt(timeParts[0]), currentDate.getMinutes() + parseInt(timeParts[1]), currentDate.getSeconds() + parseInt(timeParts[2]));
+                
+                if (duration < currentDate)
+                    this.activeBoosters.splice(this.activeBoosters.indexOf(booster), 1);
+                else
+                    booster.duration = new Date(duration.getTime() - new Date().getTime()).toISOString().substr(11, 8);
+            });
         }
     },
     mounted() {
@@ -90,6 +110,7 @@ export default {
                     this.$router.push({ path: '/presentation' });
                 } else if (Response.objectType == 'SHOPITEM') {
                     this.item = Response;
+                    this.activeBoosters.push(Response);
                     // open shop item popup
                     this.loadComponent();
                 } else if (Response.objectType == 'QUESTION') {
@@ -121,11 +142,15 @@ export default {
     <component :is="asyncComponent" v-if="asyncComponent" :item="this.item"></component>
 
     <Header></Header>
-    
+
     <div class="container-fluid row">
         <!-- Active Boosters-->
-        <div class="col-2 text-center mt-5">
+        <div class="col-2 row text-center mt-5 g-0">
             <h2 class="text-light">Active Boosters</h2>
+            <div class="col-6 p-1" v-for="booster in activeBoosters" :key="booster.id">
+                <img :src="'/images/shop/' + booster.title + '.png'" alt="Quiz" class="img-fluid">
+                <p :id="'booster' + this.activeBoosters.indexOf(booster)">{{ booster.duration }}</p>
+            </div>
         </div>
 
         <!-- Presentation-->
@@ -133,8 +158,7 @@ export default {
             <!--top 1-->
             <div v-if="users[0]" class="row mt-2">
                 <div class="col-2 offset-5 position-relative">
-                    <img :src="'/images/users/' + users[0].username + '.png'" alt="Quiz"
-                        class="img-fluid">
+                    <img :src="'/images/users/' + users[0].username + '.png'" alt="Quiz" class="img-fluid">
                     <img src="/images/golden-crown-emblem-with-wreath-frame.png" alt="Quiz"
                         class="position-absolute start-50 translate-middle"
                         style="width:135%; height: 135%; margin-top: 32%">
@@ -144,31 +168,26 @@ export default {
             <!--top 3-->
             <div v-if="users[1] && users[2]" class="row mt-2">
                 <div class="col-2 offset-4">
-                    <img :src="'/images/users/' + users[1].username + '.png'" alt="Quiz"
-                        class="img-fluid">
+                    <img :src="'/images/users/' + users[1].username + '.png'" alt="Quiz" class="img-fluid">
                     <p>{{ users[1].username }} - {{ users[1].points }} points</p>
                 </div>
                 <div class="col-2">
-                    <img :src="'/images/users/' + users[2].username + '.png'" alt="Quiz"
-                        class="img-fluid">
+                    <img :src="'/images/users/' + users[2].username + '.png'" alt="Quiz" class="img-fluid">
                     <p>{{ users[2].username }} - {{ users[2].points }} points</p>
                 </div>
             </div>
             <!--top 6-->
             <div v-if="users[3] && users[4] && users[5]" class="row mt-2">
                 <div class="col-2 offset-3">
-                    <img :src="'/images/users/' + users[3].username + '.png'" alt="Quiz"
-                        class="img-fluid">
+                    <img :src="'/images/users/' + users[3].username + '.png'" alt="Quiz" class="img-fluid">
                     <p>{{ users[3].username }} - {{ users[3].points }} points</p>
                 </div>
                 <div class="col-2">
-                    <img :src="'/images/users/' + users[4].username + '.png'" alt="Quiz"
-                        class="img-fluid">
+                    <img :src="'/images/users/' + users[4].username + '.png'" alt="Quiz" class="img-fluid">
                     <p>{{ users[4].username }} - {{ users[4].points }} points</p>
                 </div>
                 <div class="col-2">
-                    <img :src="'/images/users/' + users[5].username + '.png'" alt="Quiz"
-                        class="img-fluid">
+                    <img :src="'/images/users/' + users[5].username + '.png'" alt="Quiz" class="img-fluid">
                     <p>{{ users[5].username }} - {{ users[5].points }} points</p>
                 </div>
             </div>
