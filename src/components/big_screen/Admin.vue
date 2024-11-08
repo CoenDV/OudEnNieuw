@@ -11,6 +11,7 @@ export default {
         return {
             loggedIn: false,
             users: [],
+            quizzes: [],
             quizStarted: false,
             question: '',
             explanation: '',
@@ -33,6 +34,17 @@ export default {
                     console.log(error);
                 });
         },
+        getQuizzes() {
+            // Get the quizzes from the database
+            axios.get('/quiz')
+                .then(response => {
+                    console.log(response.data);
+                    this.quizzes = response.data;
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
         addPoints() {
             let username = document.getElementById('userOptions').options[document.getElementById('userOptions').selectedIndex].value;
             let points = document.getElementById('points').value;
@@ -46,7 +58,7 @@ export default {
                 });
         },
         startQuiz() {
-            axios.post('/quiz/start')
+            axios.post('/quiz/start/'+document.getElementById('quizOptions').options[document.getElementById('quizOptions').selectedIndex].value)
                 .then(response => {
                     console.log(response.data);
                     this.quizStarted = true;
@@ -79,6 +91,7 @@ export default {
     },
     mounted() {
         this.getUsers();
+        this.getQuizzes();
 
         this.stompClient = new StompJs.Client({
             brokerURL: this.$webSocketLink + 'gs-guide-websocket'
@@ -165,9 +178,13 @@ export default {
                 <button class="btn col-12 mt-3" @click="addPoints">Add points</button>
             </div>
 
-            <!-- start quiz -->
-            <div v-if="!quizStarted" class="card py-3 mb-5">
-                <h2 class="text-center text-light"> Start Quiz </h2>
+            <!-- Select Quiz -->
+            <div v-if="!quizStarted" class="card py-3 my-3">
+                <h2 class="text-center text-light">Select what quiz to play</h2>
+                <select id="quizOptions" class="form-select" aria-label="Default select example">
+                    <option selected>Select a Quiz</option>
+                    <option v-for="quiz in quizzes" :value="quiz.quizId">{{ quiz.quizId }}</option>
+                </select>
                 <button class="btn col-12 mt-3" @click="startQuiz">Start Quiz</button>
             </div>
 
