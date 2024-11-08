@@ -161,7 +161,7 @@ export default {
                     <option selected>Select a player</option>
                     <option v-for="user in users" :value="user.username">{{ user.username }}</option>
                 </select>
-                <input id="points" type="number" class="form-control mt-3" placeholder="Amount of points">
+                <input id="points" type="tel" class="form-control mt-3" placeholder="Amount of points">
                 <button class="btn col-12 mt-3" @click="addPoints">Add points</button>
             </div>
 
