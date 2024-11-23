@@ -105,6 +105,8 @@ export default {
 
                 if (Response == true) {
                     this.isActive = true;
+                } else if(Response == "update points") {
+                    this.getUsers();
                 } else if (Response == false) {
                     this.isActive = false;
                     this.$router.push({ path: '/presentation' });

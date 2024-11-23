@@ -14,16 +14,62 @@ export default {
         }
     },
     mounted() {
-        // get points of logged in user
-        axios.get("/login/" + this.user.username + "/points")
-            .then(response => {
-                const Response = response.data;
-                this.user.points = Response.points;
-                this.rank = Response.rank;
-            })
-            .catch(error => {
-                console.log(error);
+        this.getPoints();
+
+        this.stompClient = new StompJs.Client({
+            brokerURL: this.$webSocketLink + 'gs-guide-websocket'
+        });
+
+        this.stompClient.onConnect = (frame) => {
+            console.log("Connected: " + frame);
+            this.stompClient.subscribe('/topic/quiz-mainscreen', (result) => {
+                const Response = JSON.parse(result.body);
+                console.log("Received: " + JSON.stringify(Response));
+                this.getPoints();
+
+                if (Response == true) {
+                    this.isActive = true;
+                } else if (Response == "update points") {
+                    this.getPoints();
+                } else if (Response == false) {
+                    this.isActive = false;
+                    this.$router.push({ path: '/presentation' });
+                } else if (Response.objectType == 'SHOPITEM') {
+                    this.item = Response;
+                    this.activeBoosters.push(Response);
+                    // open shop item popup
+                    this.loadComponent();
+                } else if (Response.objectType == 'QUESTION') {
+                    this.question = Response.question;
+                    this.answers = Response.options;
+                }
             });
+        }
+
+        this.stompClient.onWebSocketError = (error) => {
+            console.error('Error with websocket', error);
+        };
+
+        this.stompClient.onStompError = (frame) => {
+            console.error('Broker reported error: ' + frame.headers['message']);
+            console.error('Additional details: ' + frame.body);
+        };
+
+        this.stompClient.activate();
+    },
+    methods: {
+        getPoints() {
+            // get points of logged in user
+            axios.get("/login/" + this.user.username + "/points")
+                .then(response => {
+                    const Response = response.data;
+                    this.user.points = Response.points;
+                    this.rank = Response.rank;
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        }
     },
     beforeCreate() {
         if (localStorage.getItem("user") == null)

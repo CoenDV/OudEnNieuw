@@ -9,7 +9,7 @@ export default {
             const user = JSON.parse(localStorage.getItem('user'))
 
             if (user.points < item.points) {
-                this.message = 'You do not have enough points to buy this item!'
+                this.message = 'Nog even wat meer punten sparen!'
                 return
             }
 
@@ -18,16 +18,17 @@ export default {
                 userId: user.userId
             })
                 .then(response => {
-                    this.message = 'Item bought successfully!'
+                    this.message = 'Transactie goedgekeurd!'
                     localStorage.setItem('user', JSON.stringify(response.data))
                     this.$emit('changeUser')
+                    this.$emit('setShopTimeout')
                 })
                 .catch(error => {
                     console.log(error);
                 });
         },
         changeColor() {
-            if (this.message === 'Item bought successfully!')
+            if (this.message === 'Transactie goedgekeurd!')
                 return 'good'
             else
                 return 'bad'
@@ -36,6 +37,10 @@ export default {
     props: {
         item: {
             type: Object,
+            required: true
+        },
+        shopTimeout: {
+            type: Boolean,
             required: true
         }
     },
@@ -60,10 +65,10 @@ export default {
         <div class="modal-dialog">
             <div class="modal-content bg-transparent">
                 <img :src="'/images/shop/' + item.title + '.png'" alt="shop item" class="img-fluid">
-                <h3 class="p-1 rounded" :class="changeColor()" style="background-color: #0e0e0e;">{{ message }}</h3>
+                <h3 class="p-1 rounded text-center" :class="changeColor()" style="background-color: #0e0e0e;">{{ message }}</h3>
                 <div class="modal-footer bg-transparent border-0 justify-content-center">
                     <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn" @click="buyItem(item)">Buy</button>
+                    <button type="button" class="btn" @click="buyItem(item)" :disabled="shopTimeout">Buy</button>
                 </div>
             </div>
         </div>
