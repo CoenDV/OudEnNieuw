@@ -23,6 +23,7 @@ export default {
     },
     methods: {
         sendAnswer(answerIndex) {
+            console.log("Answered question");
             if (this.isAnwsered)
                 console.log("You already answered this question!");
             else {
@@ -58,6 +59,7 @@ export default {
                 } else if (Response == false) {
                     console.log("Quiz has ended!");
                     this.isActive = false;
+                    this.stompClient.deactivate();
                     this.$router.push('/home');
                 } else if (Response === "showAnswer") {
                     this.isAnwsered = true;
@@ -114,6 +116,9 @@ export default {
         };
 
         this.stompClient.activate();
+    },
+    beforeUnmount() {
+        this.stompClient.deactivate();
     },
     beforeDestroy() {
         this.stompClient.deactivate();

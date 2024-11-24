@@ -37,7 +37,7 @@ export default {
 
                 // add the time to the current date
                 let duration = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), currentDate.getHours() + parseInt(timeParts[0]), currentDate.getMinutes() + parseInt(timeParts[1]), currentDate.getSeconds() + parseInt(timeParts[2]));
-                
+
                 if (duration < currentDate)
                     this.activeBoosters.splice(this.activeBoosters.indexOf(booster), 1);
                 else
@@ -79,11 +79,8 @@ export default {
                     this.isActive = true;
                 } else if (Response == false) {
                     this.isActive = false;
+                    this.stompClient.deactivate();
                     this.$router.push({ path: '/presentation' });
-                } else if (Response.objectType == 'SHOPITEM') {
-                    this.item = Response;
-                    this.activeBoosters.push(Response);
-                    this.loadComponent(); // open shop item popup
                 } else if (Response.objectType == 'QUESTION') {
                     this.question = Response.question;
                     this.answers = Response.options;
@@ -92,6 +89,11 @@ export default {
                 } else if (Response === "showAnswer") {
                     console.log("Show answer");
                     this.showAnswer = true;
+                } else if (Response.objectType == 'SHOPITEM') {
+                    this.item = Response;
+                    this.activeBoosters.push(Response);
+                    // open shop item popup
+                    this.loadComponent();
                 }
 
             });
@@ -108,6 +110,9 @@ export default {
 
         this.stompClient.activate();
     },
+    beforeUnmount() {
+        this.stompClient.deactivate();
+    },
     beforeDestroy() {
         this.stompClient.deactivate();
     }
@@ -120,7 +125,7 @@ export default {
     <Header></Header>
 
     <div v-if="!isActive" class="container-fluid mt-5">
-        <h1 class="text-center text-light">No Quiz active at the moment...</h1>
+        <h1 class="text-center text-light">Nog geen quiz bezig, effe wachten</h1>
         <!-- Active Boosters-->
         <div class="col-2 row text-center mt-5 g-0">
             <h2 class="text-light">Active Boosters</h2>
@@ -135,7 +140,7 @@ export default {
         <div class="container mt-5">
             <div v-if="question == ''" class="row mt-5">
                 <div class="col-12 mt-5 d-flex justify-content-center">
-                    <h1 class="text-light"> Quiz is starting... </h1>
+                    <h1 class="text-light"> We gaan bijna beginnen </h1>
                 </div>
             </div>
 

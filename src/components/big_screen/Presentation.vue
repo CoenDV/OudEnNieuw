@@ -109,15 +109,13 @@ export default {
                     this.getUsers();
                 } else if (Response == false) {
                     this.isActive = false;
+                    this.stompClient.deactivate();
                     this.$router.push({ path: '/presentation' });
                 } else if (Response.objectType == 'SHOPITEM') {
                     this.item = Response;
                     this.activeBoosters.push(Response);
                     // open shop item popup
                     this.loadComponent();
-                } else if (Response.objectType == 'QUESTION') {
-                    this.question = Response.question;
-                    this.answers = Response.options;
                 }
             });
         }
@@ -132,6 +130,9 @@ export default {
         };
 
         this.stompClient.activate();
+    },
+    beforeUnmount() {
+        this.stompClient.deactivate();
     },
     beforeDestroy() {
         clearInterval(this.countdownTimer);
