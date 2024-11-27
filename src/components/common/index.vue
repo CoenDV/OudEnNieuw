@@ -10,7 +10,8 @@ export default {
     data() {
         return {
             user: JSON.parse(localStorage.getItem("user")),
-            rank: 0
+            rank: 0,
+            imageUrl: './images/users/' + JSON.parse(localStorage.getItem("user")).username + '.png',
         }
     },
     mounted() {
@@ -56,6 +57,9 @@ export default {
                 .catch(error => {
                     console.log(error);
                 });
+        },
+        imageUrlAlt(event) {
+            event.target.src = './images/users/profilePicture.png'
         }
     },
     beforeCreate() {
@@ -77,7 +81,7 @@ export default {
     <div class="container d-flex row justify-content-center">
         <!-- profile pic -->
         <div class="col-12 d-flex justify-content-center my-2">
-            <img :src="'./images/users/' + user.username + '.png'" alt="profile picture"
+            <img :src="this.imageUrl" @error="imageUrlAlt" alt="profile picture"
                 style="width: 200px; height: 200px;">
         </div>
 
