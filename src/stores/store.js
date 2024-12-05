@@ -10,10 +10,10 @@ export const userStore = defineStore('store', {
         isLoggedIn: (state) => state.user !== null,
     },
     actions: {
-        login(username) {
+        login(username, password) {
             return new Promise((resolve, reject) => {
                 axios
-                    .post("/login", { username: username })
+                    .post("/login", { username: username, password: password })
                     .then(response => {
                         this.username = username
                         if (response.data.username == this.username) {

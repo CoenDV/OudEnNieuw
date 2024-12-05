@@ -15,6 +15,7 @@ export default {
         return {
             user: null,
             username: "",
+            password: ""
         }
     },
     beforeMount() {
@@ -25,8 +26,8 @@ export default {
         }
     },
     methods: {
-        login(username) {
-            this.store.login(username)
+        login(username, password) {
+            this.store.login(username, password)
                 .then(() => {
                     router.push({ path: '/home' });
                 })
@@ -46,10 +47,14 @@ export default {
             <div class="card-body">
                 <form>
                     <div class="mb-3">
-                        <label for="Username" class="form-label">Username</label>
+                        <label for="Username" class="form-label">Gebruikersnaam: </label>
                         <input type="text" class="form-control" id="Username" name="username" v-model="username">
                     </div>
-                    <input type="button" class="btn col-12" value="Login" @click="login(username)" />
+                    <div class="mb-3">
+                        <label for="Password" class="form-label">Wachtwoord: </label>
+                        <input type="password" class="form-control" id="Paddword" name="password" v-model="password">
+                    </div>
+                    <input type="button" class="btn col-12" value="Login" @click="login(username, password)" />
                 </form>
             </div>
         </div>

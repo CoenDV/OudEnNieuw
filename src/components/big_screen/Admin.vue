@@ -15,6 +15,7 @@ export default {
             quizStarted: false,
             question: '',
             explanation: '',
+            playersAnswered: 0,
         }
     },
     methods: {
@@ -117,9 +118,12 @@ export default {
                     this.correctAnswer = Response.answer;
                     this.showAnswer = false;
                     this.explanation = Response.explanation;
+                    this.playersAnswered = 0;
                 } else if (Response === "showAnswer") {
                     console.log("Show answer");
                     this.showAnswer = true;
+                } else if (Response == "playerAnswered") {
+                    this.playersAnswered++;
                 }
 
             });
@@ -176,6 +180,12 @@ export default {
                 </select>
                 <input id="points" type="tel" class="form-control mt-3" placeholder="Amount of points">
                 <button class="btn col-12 mt-3" @click="addPoints">Add points</button>
+            </div>
+
+            <!-- show amount of answers -->
+            <div class="card py-3 my-3">
+                <h2 class="text-center text-light">Nr. of players answered</h2>
+                <input :value="playersAnswered" id="amountAnswered" type="number" class="form-control mt-3" placeholder="Nr. of players answered" disabled>
             </div>
 
             <!-- Select Quiz -->

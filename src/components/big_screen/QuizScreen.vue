@@ -146,7 +146,7 @@ export default {
 
             <div v-else>
                 <div class="row mt-5">
-                    <div class="col-12 mt-5 d-flex justify-content-center">
+                    <div class="col-12 mt-3 d-flex justify-content-center">
                         <h1 class="text-light">{{ question }}</h1>
                     </div>
                 </div>
@@ -155,25 +155,25 @@ export default {
                     <div class="row mt-5 d-flex justify-content-center">
                         <div v-if="answers[0]" class="col-5 position-relative">
                             <img src="/images/quizDesktop/redButton.png" alt="Red Button" class="img-fluid">
-                            <h2 class="text-light position-absolute top-50 start-50 translate-middle">{{ answers[0] }}
-                            </h2>
+                            <h3 class="text-light position-absolute top-50 start-50 translate-middle col-8">{{ answers[0] }}
+                            </h3>
                         </div>
                         <div v-if="answers[1]" class="col-5 position-relative">
                             <img src="/images/quizDesktop/blueButton.png" alt="Red Button" class="img-fluid">
-                            <h2 class="text-light position-absolute top-50 start-50 translate-middle">{{ answers[1] }}
-                            </h2>
+                            <h3 class="text-light position-absolute top-50 start-50 translate-middle col-8">{{ answers[1] }}
+                            </h3>
                         </div>
                     </div>
                     <div class="row d-flex justify-content-center mt-4">
                         <div v-if="answers[2]" class="col-5 position-relative">
                             <img src="/images/quizDesktop/yellowButton.png" alt="Red Button" class="img-fluid">
-                            <h2 class="text-light position-absolute top-50 start-50 translate-middle">{{ answers[2] }}
-                            </h2>
+                            <h3 class="text-light position-absolute top-50 start-50 translate-middle col-8">{{ answers[2] }}
+                            </h3>
                         </div>
                         <div v-if="answers[3]" class="col-5 position-relative">
                             <img src="/images/quizDesktop/greenButton.png" alt="Red Button" class="img-fluid">
-                            <h2 class="text-light position-absolute top-50 start-50 translate-middle">{{ answers[3] }}
-                            </h2>
+                            <h3 class="text-light position-absolute top-50 start-50 translate-middle col-8">{{ answers[3] }}
+                            </h3>
                         </div>
                     </div>
                 </div>
@@ -182,25 +182,41 @@ export default {
                     <div class="row mt-5 d-flex justify-content-center">
                         <div v-if="correctAnswer == answers[0]" class="col-5 position-relative">
                             <img src="/images/quizDesktop/redButton.png" alt="Red Button" class="img-fluid">
-                            <h2 class="text-light position-absolute top-50 start-50 translate-middle">{{ answers[0] }}
-                            </h2>
+                            <h3 class="text-light position-absolute top-50 start-50 translate-middle col-8">{{ answers[0] }}
+                            </h3>
                         </div>
                         <div v-if="correctAnswer == answers[1]" class="col-5 position-relative">
                             <img src="/images/quizDesktop/blueButton.png" alt="Red Button" class="img-fluid">
-                            <h2 class="text-light position-absolute top-50 start-50 translate-middle">{{ answers[1] }}
-                            </h2>
+                            <h3 class="text-light position-absolute top-50 start-50 translate-middle col-8">{{ answers[1] }}
+                            </h3>
                         </div>
                     </div>
                     <div class="row d-flex justify-content-center mt-4">
                         <div v-if="correctAnswer == answers[2]" class="col-5 position-relative">
                             <img src="/images/quizDesktop/yellowButton.png" alt="Red Button" class="img-fluid">
-                            <h2 class="text-light position-absolute top-50 start-50 translate-middle">{{ answers[2] }}
-                            </h2>
+                            <h3 class="text-light position-absolute top-50 start-50 translate-middle col-8">{{ answers[2] }}
+                            </h3>
                         </div>
                         <div v-if="correctAnswer == answers[3]" class="col-5 position-relative">
                             <img src="/images/quizDesktop/greenButton.png" alt="Red Button" class="img-fluid">
-                            <h2 class="text-light position-absolute top-50 start-50 translate-middle">{{ answers[3] }}
-                            </h2>
+                            <h3 class="text-light position-absolute top-50 start-50 translate-middle col-8">{{ answers[3] }}
+                            </h3>
+                        </div>
+                    </div>
+
+                    <div class="row mt-5 d-flex justify-content-center">
+                        <div class="col-12 d-flex justify-content-center">
+                            <div v-for="answer in answers">
+                                <div v-if="answer != correctAnswer" class="col position-relative m-1">
+                                    <img v-if="answer == answers[0]" src="/images/quizDesktop/redButton.png" alt="Red Button" class="img-fluid">
+                                    <img v-if="answer == answers[1]" src="/images/quizDesktop/blueButton.png" alt="Red Button" class="img-fluid">
+                                    <img v-if="answer == answers[2]" src="/images/quizDesktop/yellowButton.png" alt="Red Button" class="img-fluid">
+                                    <img v-if="answer == answers[3]" src="/images/quizDesktop/greenButton.png" alt="Red Button" class="img-fluid">
+                                    <h3 class="text-light position-absolute top-50 start-50 translate-middle col-9">{{
+                                        answer }}
+                                    </h3>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -208,7 +224,7 @@ export default {
         </div>
         <!-- Active Boosters-->
         <div class="col-12 row  mb-5 g-0 fixed-bottom">
-            <h2 class="text-light col-11 ms-2">Active Boosters</h2>
+            <h2 v-if="activeBoosters" class="text-light col-11 ms-2">Active Boosters</h2>
             <div class="col-1 p-1 ms-2" v-for="booster in activeBoosters" :key="booster.id">
                 <img :src="'/images/shop/' + booster.title + '.png'" alt="Quiz" class="img-fluid">
                 <p class="text-center" :id="'booster' + this.activeBoosters.indexOf(booster)">{{ booster.duration }}</p>

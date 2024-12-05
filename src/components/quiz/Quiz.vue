@@ -130,7 +130,7 @@ export default {
     <Header></Header>
 
     <div v-if="!isActive" class="container-fluid mt-5">
-        <h1 class="text-center text-light">No Quiz active at the moment...</h1>
+        <h1 class="text-center text-light">Nu effe niet</h1>
     </div>
 
     <div v-else class="container-fluid">
@@ -145,7 +145,7 @@ export default {
                 style="width: 47%; height: 47%;" @click="sendAnswer(2)">
             <img v-if="answers[3]" src="/images/buttonGreen.png" alt="quiz" class="m-1" style="width: 47%; height: 47%;"
                 @click="sendAnswer(3)">
-            <h1 v-else class="text-center text-light mt-5">Waiting for next Question</h1>
+            <h1 v-else class="text-center text-light mt-5">Wachtende op de volgende vraag</h1>
         </div>
         <!-- display answer status -->
         <div v-else>
